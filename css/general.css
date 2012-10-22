@@ -1,0 +1,32 @@
+#wrapper {
+    width: 800px;
+    margin: auto;
+}
+
+header{
+    background: #666;
+    border-radius: 10px 10px 0px 0px;
+    color: #ddd;
+    padding: 15px 20px 10px 20px;
+}
+
+header h1 {
+    text-align: center;
+    display: block;
+    font-size: 30px;
+    margin-bottom: 7px;
+}
+
+header h2 {
+    text-align: center;
+    display: block;
+    font-size: 18px;
+    font-style: italic;
+}
+
+footer {
+    background: #666;
+    border-radius: 0px 0px 10px 10px;
+    color: #ddd;
+    padding: 15px 20px 10px 20px;
+}
