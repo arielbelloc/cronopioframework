@@ -28,6 +28,10 @@ $cssClass = array (
     'image_field_wrapper' => 'image-field-wrapper',
     'foreign_field_wrapper' => 'foreign-field-wrapper',
     'date_field_wrapper' => 'date-field-wrapper',
+    
+    'menu' => 'mi-menu',
+    'item_menu' => 'li-menu',
+    'sub_menu' => 'ul-submenu',
 );
 
 $cssId = array (

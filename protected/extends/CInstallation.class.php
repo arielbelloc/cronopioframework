@@ -462,20 +462,33 @@
         final private function menu()
         {
             $menu = array(
+                'html' => array('class' => 'ulclass'),
                 'menu' => array (
                     'home' => array(
                         'link' => FRAMEWORK_URL,
                     ),
                     'about us' => array(
                         'link' => FRAMEWORK_URL . 'aboutus',
+                        'htmlItem' => array('class' => 'liHTML'),
                     ),
                     'admin' => array (
+                        'html' => array('class' => 'subMenuClass'),
                         'menu' => array (
                             'countries' => array(
                                 'link' => FRAMEWORK_URL . 'siteadmin/countries',
                             ),
                             'cities' => array(
                                 'link' => FRAMEWORK_URL . 'siteadmin/cities',
+                                'htmlItem' => array('class' => 'itemP'),
+                                'html' => array('class' => 'SubitemsP'),
+                                'menu' => array(
+                                    'prueba 1' => array(
+                                        'link' => '1.html',
+                                    ),
+                                    'prueba 2' => array(
+                                        'link' => '2.html',
+                                    ),
+                                ),
                             ),
                         ),
                     ),

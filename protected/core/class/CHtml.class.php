@@ -34,19 +34,43 @@
         * @return: HTML.
         * @In error case: Return NULL.
         */
-        final static public function createMenu(array $menu = NULL)
+        final static public function createMenu(array $menu = NULL, $recursive = FALSE)
         {
             if (!isset($menu) || count($menu)<1) {
                 return NULL;
             }
+            
+            $htmlOption = '';
+            if (isset($menu['html'])) {
+                $menu['html'] = array();
+            }
+            
+            if ($recursive) {
+                $cssParam = 'sub_menu';
+            }else{
+                $cssParam = 'menu';
+            }
+            if (isset($menu['html']['class'])) {
+                $menu['html']['class'] .= ' ' . Params::cssClass($cssParam);
+            }else{
+                $menu['html']['class'] = Params::cssClass($cssParam);
+            }
+            $htmlOption = Parse::arrayToAttributes($menu['html']);
+            
             ?>
-<ul>
+<ul <?=$htmlOption?>>
             <?php
             foreach($menu['menu'] as $key => $value){
                 $htmlOption = '';
-                if (isset($value['html'])) {
-                    $htmlOption = Parse::arrayToAttributes($value['html']);
+                if (isset($value['htmlItem'])) {
+                    $value['htmlItem'] = array();
                 }
+                if (isset($value['htmlItem']['class'])) {
+                    $value['htmlItem']['class'] .= ' ' . Params::cssClass('item_menu');
+                }else{
+                    $value['htmlItem']['class'] = Params::cssClass('item_menu');
+                }
+                $htmlOption = Parse::arrayToAttributes($value['htmlItem']);
                 ?>
 <li <?=$htmlOption?>>
                 <?php
@@ -65,7 +89,7 @@
 </li>
                 <?php
                 if (isset($value['menu']) && is_array($value['menu'])){  // If is Array and have subitems.
-                    self::createMenu($value);
+                    self::createMenu($value, TRUE);
                 }
             }
             ?>
