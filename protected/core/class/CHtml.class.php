@@ -74,23 +74,22 @@
                 ?>
 <li <?=$htmlOption?>>
                 <?php
-                if (isset($value['link']))
-                {
-                    $tagHtml = array(
-                        'tag' => 'a',
-                        'text' => $key,
-                        'html' => array('href' => $value['link']),
-                    );
-                    self::tag($tagHtml);
-                }else{
-                    echo $key;
+                $tag = 'p';
+                $tagHtml = array();
+                if (isset($value['link'])) {
+                    $tag = 'a';
+                    $tagHtml['html'] = array('href' => $value['link']);
+                }
+                $tagHtml['tag'] = $tag;
+                $tagHtml['text'] = $key;
+                
+                self::tag($tagHtml);
+                if (isset($value['menu']) && is_array($value['menu'])){  // If is Array and have subitems.
+                    self::createMenu($value, TRUE);
                 }
                 ?>
 </li>
                 <?php
-                if (isset($value['menu']) && is_array($value['menu'])){  // If is Array and have subitems.
-                    self::createMenu($value, TRUE);
-                }
             }
             ?>
 </ul>

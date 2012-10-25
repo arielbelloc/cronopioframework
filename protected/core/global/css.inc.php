@@ -29,9 +29,9 @@ $cssClass = array (
     'foreign_field_wrapper' => 'foreign-field-wrapper',
     'date_field_wrapper' => 'date-field-wrapper',
     
-    'menu' => 'mi-menu',
-    'item_menu' => 'li-menu',
-    'sub_menu' => 'ul-submenu',
+    'menu' => 'nav',
+    'item_menu' => NULL,
+    'sub_menu' => NULL,
 );
 
 $cssId = array (

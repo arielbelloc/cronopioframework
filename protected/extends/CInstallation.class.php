@@ -142,7 +142,13 @@
             $this->_db->query('TRUNCATE system_tables_structure');
             * 
             */
+            ?>
+<nav>
+            <?php
             $this->menu();
+            ?>
+</nav>
+            <?php
             $this->saveChanges(); // Call saveChanges method
             
             // Define a part of name for the id attribute of the tag input of the table parameters

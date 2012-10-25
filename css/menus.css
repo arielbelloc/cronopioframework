@@ -1,0 +1,69 @@
+/* 
+    Document   : menus
+    Created on : 25/10/2012, 09:58:59
+    Author     : ariel.belloc
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+nav {
+    background-color: #555555;
+    height: 40px;
+    width: 100%;
+}
+.nav p,
+.nav a {
+    font-family:sans-serif;
+    list-style:none;
+    text-decoration:none;
+    margin:0;
+    padding:0;
+}
+
+.nav > li {
+    float:left;
+}
+
+.nav li p,
+.nav li a {
+    background:#0c9ba0;
+    color:#FFF;
+    display:block;
+    border:1px solid;
+    padding:10px 12px;
+}
+
+.nav li .flecha{
+    font-size: 9px;
+    padding-left: 6px;
+    display: none;
+}
+
+.nav li p:not(:last-child) .flecha,
+.nav li a:not(:last-child) .flecha {
+    display: inline;
+}
+
+.nav li p:hover,
+.nav li a:hover {
+    background:#0fbfc6;
+}
+
+.nav li {
+    position:relative;
+}
+
+.nav li ul {
+    display:none;
+    position:absolute;
+    min-width:140px;
+}
+
+.nav li:hover > ul {
+    display:block;
+}
+
+.nav li ul li ul {
+    right:-140px;
+    top:0;
+}
