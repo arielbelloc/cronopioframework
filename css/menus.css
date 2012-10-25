@@ -9,6 +9,7 @@
 nav {
     background-color: #555555;
     height: 40px;
+    float: none;
     width: 100%;
 }
 .nav p,
