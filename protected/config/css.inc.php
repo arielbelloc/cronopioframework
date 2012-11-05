@@ -9,10 +9,13 @@
 * Set a default class
 */
 $cssClass = array (
+    
+    /* GENERAL */
     'submit_button' => 'submit-button',
     'wrapper_input' => 'wrapper-input',
     'caption_input' => 'caption-input',
     
+    /* FIELD TYPE */
     'number_field_input' => 'number-field-input',
     'string_field_input' => 'string-field-input',
     'text_field_input' => 'text-field-input',
@@ -21,6 +24,7 @@ $cssClass = array (
     'foreign_field_input' => 'foreign-field-input',
     'date_field_input' => 'date-field-input',
     
+    /* FIELD TYPE WRAPPER */
     'number_field_wrapper' => 'number-field-wrapper',
     'string_field_wrapper' => 'string-field-wrapper',
     'text_field_wrapper' => 'text-field-wrapper',
@@ -29,7 +33,8 @@ $cssClass = array (
     'foreign_field_wrapper' => 'foreign-field-wrapper',
     'date_field_wrapper' => 'date-field-wrapper',
     
-    'menu' => 'nav',
+    /* MENU */
+    'menu' => 'nav color-text-menu color-bg-menu color-border-menu',
     'item_menu' => NULL,
     'sub_menu' => NULL,
 );

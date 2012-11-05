@@ -58,10 +58,10 @@
 /* GLOBAL VARIABLES */
     $globalPath = $corePath.'global'.DS;
 		require_once $globalPath . 'constants.inc.php'; // Define the general constants
-		require_once $globalPath . 'css.inc.php'; // Define the general settings
 
 /* CONFIG */
     $configPath = FRAMEWORK_PATH.'config'.DS;
+        require_once $configPath . 'css.inc.php'; // Define the general settings
 		addFile($configPath . 'ConnectionData.class.php'); // Define the connection settings
 		addFile($configPath . 'Settings.class.php'); // Define the general settings
         require_once $configPath . 'declarations.inc.php';
