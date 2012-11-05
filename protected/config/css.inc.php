@@ -34,11 +34,11 @@ $cssClass = array (
     'date_field_wrapper' => 'date-field-wrapper',
     
     /* MENU */
-    'menu' => 'nav color-text-menu color-bg-menu color-border-menu',
+    'menu' => 'nav color-border-menu',
     // Another menu:
     // 'menu' => 'my-menu',
     
-    'item_menu' => NULL,
+    'item_menu' => 'color-text-menu color-bg-menu',
     'sub_menu' => NULL,
 );
 

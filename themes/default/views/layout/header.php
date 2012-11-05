@@ -14,6 +14,7 @@
         <link type="text/css" rel="stylesheet" href="<?=GENERAL_CSS?>forms.css" />
         <link type="text/css" rel="stylesheet" href="<?=GENERAL_CSS?>installation.css" />
         <link type="text/css" rel="stylesheet" href="<?=GENERAL_CSS?>menus.css" />
+        <link type="text/css" rel="stylesheet" href="<?=GENERAL_CSS?>colors.css" />
 
         <!-- Javascript (jQuery) -->
         <script src="http://code.jquery.com/jquery-latest.js"></script>

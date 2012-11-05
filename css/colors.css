@@ -9,10 +9,14 @@
 /*******
 * MENU *
 *******/
-    color-text-menu { 
+    .color-text-menu { 
         color:#FFF;
     }
 
-    color-bg-menu { 
+    .color-bg-menu { 
         background:#0c9ba0;
+    }
+
+    .color-border-menu { 
+        background-color: #555555
     }
