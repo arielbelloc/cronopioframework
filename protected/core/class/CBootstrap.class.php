@@ -10,7 +10,7 @@
 // Original Code: http://www.youtube.com/user/dlancedu / www.dlancedu.com
 class CBootstrap
 {
-    public static function run(CRequest $request)
+    final public static function run(CRequest $request)
     {
         try{
             /**** TRY *****/
@@ -60,7 +60,6 @@ class CBootstrap
         Debug::showDebugParams();
         exit();
     }
-            
 }
 
 ?>

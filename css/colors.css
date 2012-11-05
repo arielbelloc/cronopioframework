@@ -6,10 +6,13 @@
         Purpose of the stylesheet follows.
 */
 
-color-text-menu { 
-    color:#FFF;
-}
+/*******
+* MENU *
+*******/
+    color-text-menu { 
+        color:#FFF;
+    }
 
-color-bg-menu { 
-    background:#0c9ba0;
-}
+    color-bg-menu { 
+        background:#0c9ba0;
+    }

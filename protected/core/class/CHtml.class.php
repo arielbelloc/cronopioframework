@@ -11,25 +11,38 @@
          * @example:
          * 
          * $menu = array(
-         *      menu => array (
-         *          'home' => array(
-         *              'link' => FRAMEWORK_URL,
-         *          ),
-         *          'about us' => array(
-         *              'link' => FRAMEWORK_URL . 'aboutus',
-         *          ),
-         *          'admin' => array (
-         *              'menu' => array (
-         *                  'countries' => array(
-         *                      'link' => FRAMEWORK_URL . 'siteadmin/countries',
-         *                  ),
-         *                  'cities' => array(
-         *                      'link' => FRAMEWORK_URL . 'siteadmin/cities',
-         *                  ),
-         *              ),
-         *          ),
-         *      )
-         * );
+                'html' => array('class' => 'ulclass'),
+                'menu' => array (
+                    'home' => array(
+                        'link' => FRAMEWORK_URL,
+                    ),
+                    'about us' => array(
+                        'link' => FRAMEWORK_URL . 'aboutus',
+                        'htmlItem' => array('class' => 'liHTML'),
+                    ),
+                    'admin' => array (
+                        'html' => array('class' => 'subMenuClass'),
+                        'menu' => array (
+                            'countries' => array(
+                                'link' => FRAMEWORK_URL . 'siteadmin/countries',
+                            ),
+                            'cities' => array(
+                                'link' => FRAMEWORK_URL . 'siteadmin/cities',
+                                'htmlItem' => array('class' => 'itemP'),
+                                'html' => array('class' => 'SubitemsP'),
+                                'menu' => array(
+                                    'prueba 1' => array(
+                                        'link' => '1.html',
+                                    ),
+                                    'prueba 2' => array(
+                                        'link' => '2.html',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                )
+            );
         * 
         * @return: HTML.
         * @In error case: Return NULL.
@@ -41,7 +54,7 @@
             }
             
             $htmlOption = '';
-            if (isset($menu['html'])) {
+            if (!isset($menu['html'])) {
                 $menu['html'] = array();
             }
             
@@ -50,10 +63,14 @@
             }else{
                 $cssParam = 'menu';
             }
-            if (isset($menu['html']['class'])) {
-                $menu['html']['class'] .= ' ' . Params::cssClass($cssParam);
-            }else{
-                $menu['html']['class'] = Params::cssClass($cssParam);
+            
+            if (Params::cssClass($cssParam) != NULL)
+            {
+                if (isset($menu['html']['class'])) {
+                    $menu['html']['class'] .= ' ' . Params::cssClass($cssParam);
+                }else{
+                    $menu['html']['class'] = Params::cssClass($cssParam);
+                }
             }
             $htmlOption = Parse::arrayToAttributes($menu['html']);
             
@@ -62,13 +79,17 @@
             <?php
             foreach($menu['menu'] as $key => $value){
                 $htmlOption = '';
-                if (isset($value['htmlItem'])) {
+                if (!isset($value['htmlItem'])) {
                     $value['htmlItem'] = array();
                 }
-                if (isset($value['htmlItem']['class'])) {
-                    $value['htmlItem']['class'] .= ' ' . Params::cssClass('item_menu');
-                }else{
-                    $value['htmlItem']['class'] = Params::cssClass('item_menu');
+                
+                if (Params::cssClass('item_menu') != NULL)
+                {
+                    if (isset($value['htmlItem']['class'])) {
+                        $value['htmlItem']['class'] .= ' ' . Params::cssClass('item_menu');
+                    }else{
+                        $value['htmlItem']['class'] = Params::cssClass('item_menu');
+                    }
                 }
                 $htmlOption = Parse::arrayToAttributes($value['htmlItem']);
                 ?>

@@ -161,34 +161,35 @@
                 $tableId = (int) $tableId; // Transform parameters in integer
                 
                 // Search the name of the select table.
-                $tableName = $this->_db->rowbyQuery('SELECT table_name FROM system_database_structure WHERE id = ' . $tableId);
+                $tableName = $this->_db->rowbyQuery('SELECT * FROM system_database_structure WHERE id = ' . $tableId);
                 
-                $tablesToShow = array($tableId => $tableName->table_name); // Define the array whith the tables to show.
+                $tablesToShow = array();
+                
+                // Define the array whith the tables to show.
+                $tablesToShow[$tableName->id] = array(
+                    'table_name' => $tableName->table_name,
+                    'table_caption' => $tableName->table_caption,
+                    'table_description' => $tableName->table_description,
+                );
+                unset($tableName);
             }else{
                 $tablesToShow = $this->_tables; // Define the array whith the tables to show.
             }
-
-            foreach ($tablesToShow as $tableName) // For each table to show
-            {   
-                // Seach the parameters of the table.
-                $dbData = $this->_db->rowByQuery('SELECT * FROM system_database_structure WHERE table_name = "' . $tableName . '"');
-                
-                // On error.
-                if (!$dbData || count($dbData) != 1) {
-                    Debug::addDebugParams(array($tableName . ' on system_database_structure'=>$dbData));
-                    throw new CustomException('Error of database structure');
-                }
+            
+            foreach ($tablesToShow as $idTable => $tableData) // For each table to show
+            {
+                $tableName = $tableData['table_name'];
                 
                 // Define the array with the parameters of the array.
                 $formArray = array(
                     'params' => array ( // General params.
-                        'title' => 'Table: ' . $tableName,
+                        'title' => $tableData['table_caption'],
                     ),
                     'html' => array( // HTML attributes.
                         'name' => $tableName,
-                        'id' => 'form_'.$tableName,
+                        'id' => $tableName,
                         'method' => 'post',
-                        'action' => '',
+                        'action' => 'index.php' . Parse::getQueryString(),
                     ),
                 );
                 
@@ -206,7 +207,7 @@
                         ),
                         'html' => array (
                             'name' => 'db*id',
-                            'value' => $dbData->id,
+                            'value' => $idTable,
                         )
                     );
                     Html::createHtmlInput($tableArray);
@@ -223,7 +224,7 @@
                         'html' => array ( // HTML attributes.
                             'name' => 'db*table_caption',
                             'id' => $databaseHtmlId . '_' . $tableName . '_caption',
-                            'value' => $dbData->table_caption,
+                            'value' => $tableData['table_caption'],
                         )
                     );
                     Html::createHtmlInput($tableArray);
@@ -239,7 +240,7 @@
                         'html' => array ( // HTML attributes.
                             'name' => 'db*table_description',
                             'id' => $databaseHtmlId . '_' . $tableName . '_description',
-                            'value' => $dbData->table_description,
+                            'value' => $tableData['table_description'],
                         )
                     );
                     Html::createHtmlInput($tableArray);
@@ -256,10 +257,10 @@
                         $fieldType = Parse::fieldType($field); // Define the field type Id form a MySqli fetch field intance.
 
                         // If not exists this field in system_tables_structure table.
-                        if (!$this->existFieldInTableStructure($field->name, $dbData->id)) {
+                        if (!$this->existFieldInTableStructure($field->name, $idTable)) {
                             $tableStructure = array (
                                 'system_tables_structure' => array(
-                                    'database_structure_id' => $dbData->id,
+                                    'database_structure_id' => $idTable,
                                     'field_types_id' => $fieldType,
                                     'field_name' => $field->name,
                                     'field_caption' => trim(ucfirst(str_replace('_', ' ', $field->name))),
@@ -281,7 +282,7 @@
                         }
 
                         // Search a table data.
-                        $tableData = $this->_db->rowByQuery('SELECT * FROM system_tables_structure WHERE database_structure_id = ' . $dbData->id . ' AND field_name = "' . $field->name . '"');
+                        $tableData = $this->_db->rowByQuery('SELECT * FROM system_tables_structure WHERE database_structure_id = ' . $idTable . ' AND field_name = "' . $field->name . '"');
                         
                         // On Error
                         if (!$tableData || count($tableData) != 1) {
@@ -427,7 +428,7 @@
                                         'params' => array (
                                             'fieldType' => CMB_INPUT,
                                             'caption' => 'Related Table:',
-                                            'data' => $this->_tables,
+                                            'data' => $this->_listTablesToCmb(),
                                             'selected' => $tableData->field_type_int_param,
                                         ),
                                         'html' => array (
@@ -440,7 +441,7 @@
 
                                 break;
                         };
-
+                        
                         Html::createHtmlInputsInFieldset($fieldsArray);
 
                     /***************
@@ -467,40 +468,14 @@
 		*/
         final private function menu()
         {
-            $menu = array(
-                'html' => array('class' => 'ulclass'),
-                'menu' => array (
-                    'home' => array(
-                        'link' => FRAMEWORK_URL,
-                    ),
-                    'about us' => array(
-                        'link' => FRAMEWORK_URL . 'aboutus',
-                        'htmlItem' => array('class' => 'liHTML'),
-                    ),
-                    'admin' => array (
-                        'html' => array('class' => 'subMenuClass'),
-                        'menu' => array (
-                            'countries' => array(
-                                'link' => FRAMEWORK_URL . 'siteadmin/countries',
-                            ),
-                            'cities' => array(
-                                'link' => FRAMEWORK_URL . 'siteadmin/cities',
-                                'htmlItem' => array('class' => 'itemP'),
-                                'html' => array('class' => 'SubitemsP'),
-                                'menu' => array(
-                                    'prueba 1' => array(
-                                        'link' => '1.html',
-                                    ),
-                                    'prueba 2' => array(
-                                        'link' => '2.html',
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                )
-            );
-            
+            $menu = array(); // Initialice menu.
+            $menu['menu']['home'] = array('link' => FRAMEWORK_URL); // 
+            $menu['menu']['tables']['menu']['All tables'] = array('link' => 'index.php');
+            foreach ($this->_tables as $id => $tableData)
+            {
+                $menu['menu']['tables']['menu'][$tableData['table_caption']] = array('link' => 'index.php?table_id=' . $id);
+            }
+
             Html::createMenu($menu);
         }
         
@@ -662,7 +637,12 @@
                 }
                 
                 // Fill array to return
-                $toReturn[$dbData->id] = $table[0];
+                $toReturn[$dbData->id] = array(
+                    'table_name' => $dbData->table_name,
+                    'table_caption' => $dbData->table_caption,
+                    'table_description' => $dbData->table_description,
+                    
+                );
             } // |end: while($table = $result->fetch_array())|
             
             return $toReturn;
@@ -789,6 +769,14 @@
             fclose($model);
 
             return true;
+        }
+        
+        final private function _listTablesToCmb(){
+            $toReturn = array();
+            foreach ($this->_tables as $id => $data) {
+                $toReturn[$id] = $data['table_name'];
+            }
+            return $toReturn;
         }
     }
 ?>

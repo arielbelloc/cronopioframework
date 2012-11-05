@@ -35,6 +35,9 @@ $cssClass = array (
     
     /* MENU */
     'menu' => 'nav color-text-menu color-bg-menu color-border-menu',
+    // Another menu:
+    // 'menu' => 'my-menu',
+    
     'item_menu' => NULL,
     'sub_menu' => NULL,
 );

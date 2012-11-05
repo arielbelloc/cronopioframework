@@ -627,5 +627,25 @@ class CParse
                 break;
         }
     }
+    
+    final public static function getQueryString(array $params = NULL)
+    {
+        $toReturn = '?';
+        Debug::addDebugParams(array($_SERVER['QUERY_STRING']));
+        if (!empty($_SERVER['QUERY_STRING'])) {
+            $toReturn .= $_SERVER['QUERY_STRING'];
+        }else{
+            return '';
+        }
+        if (isset($params) && count($params) > 0) {
+            $params = implode('&', $params);
+            $params = '&' . $params;
+        }else{
+            $params = '';
+        }
+        
+        
+        return $toReturn;
+    }
 }
 ?>
