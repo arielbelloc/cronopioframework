@@ -85,11 +85,6 @@ Original code : http://vagabundia.blogspot.com/2012/05/simple-menu-desplegable-c
         background: linear-gradient(#555,#222);
     }
 
-    /* si es necesario, evitamos que Blogger de problemas con los saltos de línea cuando escribimos el HTML */
-    .my-menu  br {
-        display:none;
-    }
-
     /* each item of the menu*/
     .my-menu  li {
         display: block;
@@ -145,7 +140,9 @@ Original code : http://vagabundia.blogspot.com/2012/05/simple-menu-desplegable-c
         border-radius: 0 0 5px 5px;
         left: 0;
         margin: 0;
+        
         opacity: 0; /* no son visibles */
+        
         position: absolute;
         top: 40px; /* se ubican debajo del enlace principal */
         /* el color de fondo */
@@ -318,6 +315,7 @@ Based code : http://vagabundia.blogspot.com/2012/05/simple-menu-desplegable-con-
         height: 0; /* no son visibles */
     overflow: hidden;
     padding: 0;
+    
     /* animamos su visibildiad */
     -moz-transition: height .25s ease .1s;
     -webkit-transition: height .25s ease .1s;
@@ -344,29 +342,47 @@ Author     : Ariel Belloc
 Based code : http://vagabundia.blogspot.com/2012/05/simple-menu-desplegable-con-css.html
 */
 
+/* General */
+.custom-menu {
+    list-style-type: none;
+    margin: 0 auto; /* Center Menu */
+    padding: 0;
+
+    /* Modify height and width with your text size */
+    height: 40px; 
+    width: 100%;
+
+    /* Background color */
+    background: #555;
+    background: -moz-linear-gradient(#555,#222);
+    background: -webkit-linear-gradient(#555,#222);
+    background: -o-linear-gradient(#555,#222);
+    background: -ms-linear-gradient(#555,#222);
+    background: linear-gradient(#555,#222);
+}
+
+/* Texts: general params */
 .custom-menu p,
 .custom-menu a {
-    color: #fff;
+    color: #ddd;
+    display: block;
     text-decoration: none;
 }
 
-.custom-menu {
-        list-style-type: none;
-        margin: 0 auto; /* Center Menu */
-        padding: 0;
-        
-        /* Modify height and width with your text size */
-        height: 40px; 
-        width: 100%;
-        
-        /* Background color */
-        background: #555;
-        background: -moz-linear-gradient(#555,#222);
-        background: -webkit-linear-gradient(#555,#222);
-        background: -o-linear-gradient(#555,#222);
-        background: -ms-linear-gradient(#555,#222);
-        background: linear-gradient(#555,#222);
+/* Texts: hover */
+.custom-menu p:hover,
+.custom-menu a:hover {
+    color: crimson;
+    
+    /* color text change animation */
+    -webkit-transition: .4s ease-in-out;
+    -moz-transition: .4s ease-in-out;
+    -o-transition: .4s ease-in-out;
+    -ms-transition: .4s ease-in-out;
+    transition: .4s ease-in-out;
 }
+
+/* Main Menu */
 .custom-menu > li{
     line-height: 40px;
     float: left;
@@ -376,7 +392,9 @@ Based code : http://vagabundia.blogspot.com/2012/05/simple-menu-desplegable-con-
     text-align: center;
 }
 
+/* Drop down menu: General params */
 .custom-menu > li ul {
+    
     /* Background color */
     background: #222;
     background: -moz-linear-gradient(#222,#555);
@@ -385,19 +403,32 @@ Based code : http://vagabundia.blogspot.com/2012/05/simple-menu-desplegable-con-
     background: -ms-linear-gradient(#222,#555);
     background: linear-gradient(#222,#555);
     
+    border-radius: 0 0 5px 5px;
+    
     display: none;
     min-width: 140px;
     position: absolute;
+    
 }
 
-
+/* Drop down menu: Hover */
 .custom-menu > li:hover > ul {
     display: block;
 }
+
+.custom-menu > li:hover > ul li:last-child {
+    padding-bottom: 5px;
+}
+
+/* Drop down submenu: General params */
 .custom-menu li ul li {
     position: relative;
+    border-top: solid 1px #111;
 }
+
+/* Drop down submenu: Hover */
 .custom-menu li ul li:hover > ul {
+    border-radius: 0 0 5px 5px;
     display: block;
     left: 140px;
     top:0px;
