@@ -98,7 +98,7 @@
 
                 $target = $pathDestination.ucfirst($className).'.php';
 
-                if (createFile($path, $replace, $caseSensitive, $target)) {
+                if ($this->createFile($path, $replace, $caseSensitive, $target)) {
                     array_push($list, Parse::Text('The {type}.php file was created successfully', array('type'=>$className)));
                 }else{
                     array_push($list, Parse::Text('The {type}.php file could not be created', array('type'=>$className)));
@@ -150,6 +150,8 @@
 </nav>
             <?php
             $this->saveChanges(); // Call saveChanges method
+            
+            $this->createModel(); // Create a Model and a Controller
             
             // Define a part of name for the id attribute of the tag input of the table parameters
             $databaseHtmlId = 'database_';
@@ -455,7 +457,6 @@
             }
         } // |end: method|
 
-
       /********************/
 	 /*  PRIVATE METHOD  */
 	/********************/
@@ -523,6 +524,119 @@
             Html::createMenu($menu);
         }
         
+        /*
+		* CREATE MODEL
+		* Create a model
+		* 
+        * @params: void.
+		*/
+        final private function createModel($type='model', $tableId = 1)
+        {
+            if(!isset($type)) {
+                throw new CustomException(Parse::text("You don't define what do you want create"));
+            }
+            
+            // $this->createDatabaseStructure();
+            
+            // Declare an array to list the success and the errors
+            $list = array();
+            
+            // The path of the base file to create a model or controller
+            $path = TO_CREATE_PATH.$type.'.php';
+            
+            // If not existe the file
+            if (!is_readable($path)) {
+                throw new CustomException(Parse::text('The base file to create the {type} no exists', array('type'=>$type)));
+                return NULL;
+            }
+
+            // Define if the model searche is case sensitive
+            $caseSensitive = true;
+
+            
+            // Declare an array to define the string to replace
+            $replace = array();
+
+            // Parse $type parameter
+            $type = strtolower(trim($type));
+
+            $query = 'SELECT * FROM system_database_structure';
+            if (isset($tableId)) {
+                $query .= ' WHERE id = ' . $tableId;
+            }
+            $resultDb = $this->_db->query($query);
+            
+            // Roam the tables of database
+            while($rsDb = $resultDb->fetch_assoc())
+            {
+                $className = Parse::classNameEncode($rsDb['table_name']);
+
+                switch ($type)
+                {
+                    case 'controller':
+                        $className .= Config::settings()->postfixController;
+                        $pathDestination = CONTROLLERS_DEFAULT_PATH;
+                        break;
+
+                    case 'model':
+                        $pathDestination = MODELS_DEFAULT_PATH;
+                        break;
+
+                    default :
+                        throw new CustomException(Parse::text('Unknown type to create'));
+                        return NULL;
+                        break;
+                }
+                
+                $newLine = "\n\t\t\t\t";
+                
+                $replace = array(
+                    '{className}' => $className,
+                    '{tableName}' => $rsDb['table_name'],
+                    '{tableCaption}' => $rsDb['table_caption'],
+                    '{tableDescription}' => $rsDb['table_description'],
+                );
+                
+                $query = 'SELECT * FROM system_tables_structure WHERE database_structure_id = ' . $rsDb['id'];
+                $resultTable = $this->_db->query($query);
+            
+                $replace['{rules}'] = '';
+                while ($table = $resultTable->fetch_assoc())
+                {
+                    $replace['{rules}'] .= $newLine . "'" . $table['field_name'] . "' => array (";
+                    $replace['{rules}'] .= $newLine . "\t" . "'caption' => '". $table['field_caption'] . "',";
+                    $replace['{rules}'] .= $newLine . "\t" . "'description' => '". $table['field_description'] . "',";
+                    $replace['{rules}'] .= $newLine . "\t" . "'type' => " . Parse::fieldTypeConst($table['field_types_id']) . ",";
+                    
+                    if ($table['field_required'] == Config::settings()->trueValueToWrite) {
+                        $requireString = 'true';
+                    } else {
+                        $requireString = 'false';
+                    }
+                    $replace['{rules}'] .= $newLine . "\t" . "'required' => ". $requireString . ",";
+                        
+                    $replace['{rules}'] .= $newLine . '),';
+                }
+
+                $target = $pathDestination.ucfirst($className).'.php';
+
+                if ($this->createFile($path, $replace, $caseSensitive, $target)) {
+                    array_push($list, Parse::Text('The {type}.php file was created successfully', array('type'=>$className)));
+                }else{
+                    array_push($list, Parse::Text('The {type}.php file could not be created', array('type'=>$className)));
+                }
+            }
+
+            $toReturn = '';
+            $toReturn .= '<ul id = "createMVC">';
+            foreach ($list as $lm)
+            {
+                $toReturn .= '<li>'.$lm.'</li>';	
+            }
+            $toReturn .= '</ul>';
+
+            echo $toReturn;
+        }
         
         /*
 		* SAVE CHANGES

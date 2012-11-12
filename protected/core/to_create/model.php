@@ -9,5 +9,15 @@
     class {className} extends Model
     {
         protected $_tableName = '{tableName}';
+        protected $_tableCaption = '{tableCaption}';
+        protected $_tableDescription = '{tableDescription}';
+        
+        public function rules()
+        {
+            return array(
+                {rules}
+            );
+            
+        }
     }
 ?>
