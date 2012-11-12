@@ -468,7 +468,7 @@
 		*/
         final private function menu()
         {
-            /*
+            
             $menu = array(); // Initialice menu.
             $menu['menu']['home'] = array('link' => FRAMEWORK_URL); // 
             $menu['menu']['tables']['menu']['All tables'] = array('link' => 'index.php');
@@ -476,7 +476,12 @@
             {
                 $menu['menu']['tables']['menu'][$tableData['table_caption']] = array('link' => 'index.php?table_id=' . $id);
             }
+            
+            
+            /*
+            * TEST MENU
             */
+            /*
             $menu = array(
                 'menu' => array (
                     'home' => array(
@@ -513,7 +518,8 @@
                     ),
                 )
             );
-            
+            * 
+            */            
             Html::createMenu($menu);
         }
         

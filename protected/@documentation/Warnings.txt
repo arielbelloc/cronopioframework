@@ -1,4 +1,0 @@
-﻿- Ordenar ConopioSet.
-- Revisar la función de addFile()
-
-Arnaldo: 4641-9036

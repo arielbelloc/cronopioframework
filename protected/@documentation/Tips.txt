@@ -1,4 +1,0 @@
-- Id field of all tables should be called "id"
-- foreing key of all tabler should be called "foreingTable_id"
-- Los modelos heredan de una clase donde las propiedades son de solo lectura.
-- La propiedad tiene que ser declarada como PROTECTED y deben llevar un guión bajo (_) delante. Ej.: $_tableName
